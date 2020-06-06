@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html,body{
+            height: 100%;
+        }
+		.box{
+			width: 200px;
+			height: 200px;
+			background-color: #ccc;
+			position: absolute;
+
+		}
+		button{
+			user-select: none;
+		}
+	</style>
+</head>
+<body>
+    <div class="box">
+		
+	</div>
+	<button type="button" class="but">
+		回放
+	</button>
+</body>
+</html>
+<script>
+    var box=document.getElementsByClassName('box')[0]
+    var but=document.getElementsByClassName('but')[0]
+    var k = []
+	var k2 = []
+    box.onmousedown=function(ev){
+        k=[]
+		k2=[]
+		var x1 = ev.pageX
+		var y1 = ev.pageY
+        
+        console.log(x1,y1)
+		var pl1 =  box.offsetLeft
+		var pt1 =  box.offsetTop
+		document.onmousemove=function(ev){
+            
+			var x2 = ev.pageX-x1+pl1
+			var y2 = ev.pageY-y1+pt1 
+            box.style.left=x2+'px'
+            box.style.top=y2+'px'
+            console.log(x2,y2)
+			k.push(x2)
+			k2.push(y2)
+		}
+        box.onmouseup=function(){
+            document.onmousemove=function(){
+                return null
+            }
+            but.onclick=function(){
+                var i = k.length-1
+				setInterval(function(){
+					i--;
+                    box.style.left=k[i]+'px'
+                    box.style.top=k2[i]+'px'
+				},20)
+            }
+        }
+		
+    }
+
+</script>
